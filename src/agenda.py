@@ -37,6 +37,27 @@ class Agenda():
             for horario in list_horarios
         }
 
+    def __contains__(self, paciente: Paciente) -> bool:
+        for agendamento in self._agendamentos.values():
+            print(agendamento)
+            if agendamento == paciente:
+                return True
+        return False
+    
     @property
-    def agendamentos(self):
+    def agendamentos(self) -> Agendamento:
         return self._agendamentos
+    
+    @property
+    def medico(self) -> Medico:
+        return self._medico
+    
+    @property
+    def dia(self) -> DIA:
+        return self._dia
+    
+    def agendar_horario(self, paciente: Paciente, horario: time) -> None:
+
+        if not horario in self._agendamentos.keys():
+            raise Exception("Horário inválido para o médico!")
+        self._agendamentos[horario] = paciente

@@ -52,3 +52,24 @@ class TestAgenda(TestCase):
         )
 
         self.assertEqual(chaves_horarios, list(agenda.agendamentos.keys()))
+
+    def test_agendar_horario(self):
+
+        agenda = Agenda(
+            DIA.SEGUNDA,
+            self.medico_1
+        )
+
+        agenda.agendar_horario(self.paciente_1, time(hour = 9, minute = 30))
+
+        self.assertTrue(self.paciente_1 in agenda)
+
+    def test_agendar_horario_invalido(self):
+
+        agenda = Agenda(
+            DIA.SEGUNDA,
+            self.medico_1
+        )
+
+        with self.assertRaises(Exception):
+            agenda.agendar_horario(self.paciente_1, time(hour = 7, minute = 30))
