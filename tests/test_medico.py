@@ -52,6 +52,7 @@ class TestMedico(TestCase):
         )
             
     def test_nao_criar_medico_hora_inicio_menor_hora_fim(self):
+        
         with self.assertRaises(ValueError):
             medico = Medico(
             nome = "Dr House",
@@ -121,6 +122,7 @@ class TestMedico(TestCase):
         self.assertEqual(novo_horario_fim, medico.hora_fim)
 
     def test_nao_alterar_horario_atendimento_inicio_depois_do_fim(self):
+
         medico = Medico(
             nome = "Dr House",
             hora_inicio = time(
