@@ -97,3 +97,26 @@ class TestAgenda(TestCase):
 
         self.assertFalse(agenda.verificar_horario_disponivel(time(hour = 9, minute = 30)))
         self.assertTrue(agenda.verificar_horario_disponivel(time(hour = 10, minute = 30)))
+
+    def test_desmarcar_horario(self):
+
+        agenda = Agenda(
+            DIA.SEGUNDA,
+            self.medico_1
+        )
+
+        agenda.agendar_horario(self.paciente_1, time(hour = 9, minute = 30))
+
+        agenda.desmarcar_horario(time(hour = 9, minute = 30))
+
+        self.assertTrue(agenda.verificar_horario_disponivel(time(hour = 9, minute = 30)))
+
+    def test_desmarcar_horario_inexistente(self):
+
+        agenda = Agenda(
+            DIA.SEGUNDA,
+            self.medico_1
+        )
+
+        with self.assertRaises(Exception):
+            agenda.desmarcar_horario(time(hour = 15, minute = 30))

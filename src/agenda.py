@@ -70,6 +70,13 @@ class Agenda():
         
         self._agendamentos[horario]['paciente'] = paciente
 
+    def desmarcar_horario(self, horario: time) -> None:
+
+        if not horario in self._agendamentos.keys():
+            raise Exception("Horário não coberto pelo médico!")
+            
+        self._agendamentos[horario]['paciente'] = None
+
     def verificar_horario_disponivel(self, horario: time) -> bool:
 
         if not horario in self._agendamentos.keys():
