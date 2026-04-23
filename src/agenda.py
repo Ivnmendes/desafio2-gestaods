@@ -43,6 +43,14 @@ class Agenda():
                 return True
         return False
     
+    def __len__(self) -> int:
+        count = 0
+        for agendamento in self._agendamentos.values():
+            if agendamento['paciente'] is not None:
+                count += 1
+
+        return count
+    
     @property
     def agendamentos(self) -> Agendamento:
         return self._agendamentos
