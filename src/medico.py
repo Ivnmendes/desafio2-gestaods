@@ -1,5 +1,6 @@
 
 from datetime import time
+from src.utils import validar_horario
 
 class Medico:
 
@@ -8,8 +9,8 @@ class Medico:
         if not nome:
             raise ValueError("O médico deve ter nome!")
         
-        if not hora_inicio or not hora_fim:
-            raise ValueError("O médico deve ter um horário de atendimento")
+        if not validar_horario(hora_inicio=hora_inicio, hora_fim=hora_fim):
+            raise ValueError("O médico deve ter um horário de atendimento válido!")
         
         self._nome = nome
         self._hora_inicio = hora_inicio
@@ -29,6 +30,11 @@ class Medico:
     
     def alterar_horario_atendimento(self, hora_inicio: time = None, hora_fim: time = None) -> None:
 
-        self._hora_inicio = hora_inicio if hora_inicio else self._hora_inicio
+        hora_inicio_alterar = hora_inicio if hora_inicio else self._hora_inicio
+        hora_fim_alterar = hora_fim if hora_fim else self._hora_fim
+
+        if not validar_horario(hora_inicio=hora_inicio_alterar, hora_fim=hora_fim_alterar):
+            raise ValueError("O médico deve ter um horário de atendimento válido!")
         
-        self._hora_fim = hora_fim if hora_fim else self._hora_fim
+        self._hora_inicio = hora_inicio_alterar
+        self._hora_fim = hora_fim_alterar
