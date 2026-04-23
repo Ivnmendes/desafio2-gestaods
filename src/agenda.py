@@ -39,8 +39,7 @@ class Agenda():
 
     def __contains__(self, paciente: Paciente) -> bool:
         for agendamento in self._agendamentos.values():
-            print(agendamento)
-            if agendamento == paciente:
+            if agendamento['paciente'] == paciente:
                 return True
         return False
     
@@ -58,6 +57,14 @@ class Agenda():
     
     def agendar_horario(self, paciente: Paciente, horario: time) -> None:
 
+        if not self.verificar_horario_disponivel(horario):
+            raise Exception("Horário ocupado/inexistente, escolha outro!")
+        
+        self._agendamentos[horario]['paciente'] = paciente
+
+    def verificar_horario_disponivel(self, horario: time) -> bool:
+
         if not horario in self._agendamentos.keys():
-            raise Exception("Horário inválido para o médico!")
-        self._agendamentos[horario] = paciente
+            return False
+
+        return self._agendamentos[horario]['paciente'] is None

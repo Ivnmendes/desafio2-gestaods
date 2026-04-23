@@ -72,4 +72,28 @@ class TestAgenda(TestCase):
         )
 
         with self.assertRaises(Exception):
-            agenda.agendar_horario(self.paciente_1, time(hour = 7, minute = 30))
+            agenda.agendar_horario(self.paciente_1, time(hour = 8, minute = 32))
+
+    def test_nao_agendar_sobreposicao_horario(self):
+
+        agenda = Agenda(
+            DIA.SEGUNDA,
+            self.medico_1
+        )
+
+        agenda.agendar_horario(self.paciente_1, time(hour = 9, minute = 30))
+
+        with self.assertRaises(Exception):
+            agenda.agendar_horario(self.paciente_2, time(hour = 9, minute = 30))
+
+    def test_verificar_horario_disponivel(self):
+
+        agenda = Agenda(
+            DIA.SEGUNDA,
+            self.medico_1
+        )
+
+        agenda.agendar_horario(self.paciente_1, time(hour = 9, minute = 30))
+
+        self.assertFalse(agenda.verificar_horario_disponivel(time(hour = 9, minute = 30)))
+        self.assertTrue(agenda.verificar_horario_disponivel(time(hour = 10, minute = 30)))
