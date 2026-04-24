@@ -2,6 +2,7 @@
 from unittest import TestCase
 from datetime import time
 from src.agenda import Agenda, DIA, DURACAO_CONSULTA
+from src.exceptions import HorarioIndisponivelException
 from src.medico import Medico
 from src.paciente import Paciente
 from src.utils import gerar_lista_horarios
@@ -71,7 +72,7 @@ class TestAgenda(TestCase):
             self.medico_1
         )
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(HorarioIndisponivelException):
             agenda.agendar_horario(self.paciente_1, time(hour = 8, minute = 32))
 
     def test_nao_agendar_sobreposicao_horario(self):
@@ -83,7 +84,7 @@ class TestAgenda(TestCase):
 
         agenda.agendar_horario(self.paciente_1, time(hour = 9, minute = 30))
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(HorarioIndisponivelException):
             agenda.agendar_horario(self.paciente_2, time(hour = 9, minute = 30))
 
     def test_verificar_horario_disponivel(self):
@@ -118,5 +119,5 @@ class TestAgenda(TestCase):
             self.medico_1
         )
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(HorarioIndisponivelException):
             agenda.desmarcar_horario(time(hour = 15, minute = 30))

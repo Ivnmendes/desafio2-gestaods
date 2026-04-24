@@ -2,6 +2,7 @@
 from enum import Enum
 from datetime import time
 from typing import Optional, TypedDict
+from src.exceptions import HorarioIndisponivelException
 from src.paciente import Paciente
 from src.medico import Medico
 from src.utils import gerar_lista_horarios
@@ -66,15 +67,15 @@ class Agenda():
     def agendar_horario(self, paciente: Paciente, horario: time) -> None:
 
         if not self.verificar_horario_disponivel(horario):
-            raise Exception("Horário ocupado/inexistente, escolha outro!")
+            raise HorarioIndisponivelException("Horário ocupado/inexistente, escolha outro!")
         
         self._agendamentos[horario]['paciente'] = paciente
 
     def desmarcar_horario(self, horario: time) -> None:
 
         if not horario in self._agendamentos.keys():
-            raise Exception("Horário não coberto pelo médico!")
-            
+            raise HorarioIndisponivelException("Horário não coberto pelo médico!")
+
         self._agendamentos[horario]['paciente'] = None
 
     def verificar_horario_disponivel(self, horario: time) -> bool:
