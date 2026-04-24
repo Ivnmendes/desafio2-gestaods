@@ -1,11 +1,11 @@
 
 from unittest import TestCase
-from datetime import time
-from src.agenda import Agenda, DIA, DURACAO_CONSULTA
+from datetime import date, datetime, time
+from src.agenda import Agenda, DURACAO_CONSULTA
 from src.exceptions import HorarioIndisponivelException
 from src.medico import Medico
 from src.paciente import Paciente
-from src.utils import gerar_lista_horarios
+from src.utils import gerar_lista_datetime, gerar_lista_horarios, DIAS
 
 class TestAgenda(TestCase):
 
@@ -18,7 +18,8 @@ class TestAgenda(TestCase):
         hora_fim = time(
             hour = 14,
             minute = 30
-        )
+        ),
+        lista_dias = [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA]
     )
     medico_2 = Medico(
         nome = "Treze",
@@ -29,7 +30,8 @@ class TestAgenda(TestCase):
         hora_fim = time(
             hour = 16,
             minute = 30
-        )
+        ),
+        lista_dias = [DIAS.SEGUNDA, DIAS.TERCA, DIAS.SEXTA]
     )
     
     paciente_1 = Paciente(
@@ -42,82 +44,220 @@ class TestAgenda(TestCase):
     def test_criar_agenda(self):
 
         agenda = Agenda(
-            DIA.SEGUNDA,
-            self.medico_1
+            self.medico_1,
+            data_inicio = date(
+                year = 2026,
+                month = 4,
+                day = 1
+            ),
+            data_fim = date(
+                year = 2026,
+                month = 4,
+                day = 30
+            )
         )
 
-        chaves_horarios = gerar_lista_horarios(
-            hora_inicio = self.medico_1.hora_inicio,
-            hora_fim = self.medico_1.hora_fim,
+        lista_datetimes = gerar_lista_datetime(
+            medico = self.medico_1,
+            data_inicio = date(
+                year = 2026,
+                month = 4,
+                day = 1
+            ),
+            data_fim = date(
+                year = 2026,
+                month = 4,
+                day = 30
+            ),
             intervalo_minutos = DURACAO_CONSULTA
         )
 
-        self.assertEqual(chaves_horarios, list(agenda.agendamentos.keys()))
+        self.assertEqual(lista_datetimes, list(agenda.agendamentos.keys()))
 
     def test_agendar_horario(self):
 
         agenda = Agenda(
-            DIA.SEGUNDA,
-            self.medico_1
+            self.medico_1,
+            data_inicio = date(
+                year = 2026,
+                month = 4,
+                day = 1
+            ),
+            data_fim = date(
+                year = 2026,
+                month = 4,
+                day = 30
+            )
         )
 
-        agenda.agendar_horario(self.paciente_1, time(hour = 9, minute = 30))
+        agenda.agendar_horario(self.paciente_1, datetime(
+            year = 2026, 
+            month = 4,
+            day = 2,
+            hour = 9,
+            minute = 30
+        ))
 
         self.assertTrue(self.paciente_1 in agenda)
 
     def test_agendar_horario_invalido(self):
 
         agenda = Agenda(
-            DIA.SEGUNDA,
-            self.medico_1
+            self.medico_1,
+            data_inicio = date(
+                year = 2026,
+                month = 4,
+                day = 1
+            ),
+            data_fim = date(
+                year = 2026,
+                month = 4,
+                day = 30
+            )
         )
 
         with self.assertRaises(HorarioIndisponivelException):
-            agenda.agendar_horario(self.paciente_1, time(hour = 8, minute = 32))
+            agenda.agendar_horario(self.paciente_1, datetime(
+            year = 2026, 
+            month = 4,
+            day = 2,
+            hour = 9,
+            minute = 32
+        ))
 
     def test_nao_agendar_sobreposicao_horario(self):
 
         agenda = Agenda(
-            DIA.SEGUNDA,
-            self.medico_1
+            self.medico_1,
+            data_inicio = date(
+                year = 2026,
+                month = 4,
+                day = 1
+            ),
+            data_fim = date(
+                year = 2026,
+                month = 4,
+                day = 30
+            )
         )
 
-        agenda.agendar_horario(self.paciente_1, time(hour = 9, minute = 30))
+        agenda.agendar_horario(self.paciente_1, datetime(
+            year = 2026, 
+            month = 4,
+            day = 2,
+            hour = 9,
+            minute = 30
+        ))
 
         with self.assertRaises(HorarioIndisponivelException):
-            agenda.agendar_horario(self.paciente_2, time(hour = 9, minute = 30))
+            agenda.agendar_horario(self.paciente_2, datetime(
+                year = 2026, 
+                month = 4,
+                day = 2,
+                hour = 9,
+                minute = 30
+            ))
 
     def test_verificar_horario_disponivel(self):
 
         agenda = Agenda(
-            DIA.SEGUNDA,
-            self.medico_1
+            self.medico_1,
+            data_inicio = date(
+                year = 2026,
+                month = 4,
+                day = 1
+            ),
+            data_fim = date(
+                year = 2026,
+                month = 4,
+                day = 30
+            )
         )
 
-        agenda.agendar_horario(self.paciente_1, time(hour = 9, minute = 30))
+        agenda.agendar_horario(self.paciente_1, datetime(
+            year = 2026, 
+            month = 4,
+            day = 2,
+            hour = 9,
+            minute = 30
+        ))
 
-        self.assertFalse(agenda.verificar_horario_disponivel(time(hour = 9, minute = 30)))
-        self.assertTrue(agenda.verificar_horario_disponivel(time(hour = 10, minute = 30)))
+        self.assertFalse(agenda.verificar_horario_disponivel(datetime(
+            year = 2026, 
+            month = 4,
+            day = 2,
+            hour = 9,
+            minute = 30
+        )))
+        self.assertTrue(agenda.verificar_horario_disponivel(datetime(
+            year = 2026, 
+            month = 4,
+            day = 2,
+            hour = 10,
+            minute = 30
+        )))
 
     def test_desmarcar_horario(self):
 
         agenda = Agenda(
-            DIA.SEGUNDA,
-            self.medico_1
+            self.medico_1,
+            data_inicio = date(
+                year = 2026,
+                month = 4,
+                day = 1
+            ),
+            data_fim = date(
+                year = 2026,
+                month = 4,
+                day = 30
+            )
         )
 
-        agenda.agendar_horario(self.paciente_1, time(hour = 9, minute = 30))
+        agenda.agendar_horario(self.paciente_1, datetime(
+            year = 2026, 
+            month = 4,
+            day = 2,
+            hour = 9,
+            minute = 30
+        ))
 
-        agenda.desmarcar_horario(time(hour = 9, minute = 30))
+        agenda.desmarcar_horario(datetime(
+            year = 2026, 
+            month = 4,
+            day = 2,
+            hour = 9,
+            minute = 30
+        ))
 
-        self.assertTrue(agenda.verificar_horario_disponivel(time(hour = 9, minute = 30)))
+        self.assertTrue(agenda.verificar_horario_disponivel(datetime(
+            year = 2026, 
+            month = 4,
+            day = 2,
+            hour = 9,
+            minute = 30
+        )))
 
     def test_desmarcar_horario_inexistente(self):
 
         agenda = Agenda(
-            DIA.SEGUNDA,
-            self.medico_1
+            self.medico_1,
+            data_inicio = date(
+                year = 2026,
+                month = 4,
+                day = 1
+            ),
+            data_fim = date(
+                year = 2026,
+                month = 4,
+                day = 30
+            )
         )
 
         with self.assertRaises(HorarioIndisponivelException):
-            agenda.desmarcar_horario(time(hour = 15, minute = 30))
+            agenda.desmarcar_horario(datetime(
+            year = 2026, 
+            month = 4,
+            day = 2,
+            hour = 15,
+            minute = 30
+        ))

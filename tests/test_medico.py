@@ -1,6 +1,7 @@
 
 from unittest import TestCase
 from src.medico import Medico
+from src.utils import DIAS
 from datetime import time
 
 class TestMedico(TestCase):
@@ -16,7 +17,8 @@ class TestMedico(TestCase):
             hora_fim = time(
                 hour = 12,
                 minute = 0
-            )
+            ),
+            lista_dias = [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA]
         )
 
         self.assertIsInstance(medico, Medico)
@@ -33,7 +35,8 @@ class TestMedico(TestCase):
             hora_fim = time(
                 hour = 12,
                 minute = 0
-            )
+            ),
+            lista_dias = [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA]
         )
             
     def test_nao_criar_medico_nome_invalido(self):
@@ -48,7 +51,8 @@ class TestMedico(TestCase):
             hora_fim = time(
                 hour = 12,
                 minute = 0
-            )
+            ),
+            lista_dias = [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA]
         )
             
     def test_nao_criar_medico_hora_inicio_menor_hora_fim(self):
@@ -63,7 +67,8 @@ class TestMedico(TestCase):
             hora_fim = time(
                 hour = 8,
                 minute = 0
-            )
+            ),
+            lista_dias = [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA]
         )
             
     def test_alterar_horario_atendimento(self):
@@ -77,7 +82,8 @@ class TestMedico(TestCase):
             hora_fim = time(
                 hour = 12,
                 minute = 0
-            )
+            ),
+            lista_dias = [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA]
         )
 
         novo_horario_inicio = time(
@@ -105,7 +111,8 @@ class TestMedico(TestCase):
             hora_fim = time(
                 hour = 12,
                 minute = 0
-            )
+            ),
+            lista_dias = [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA]
         )
 
         novo_horario_fim = time(
@@ -132,7 +139,8 @@ class TestMedico(TestCase):
             hora_fim = time(
                 hour = 12,
                 minute = 0
-            )
+            ),
+            lista_dias = [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA]
         )
 
         novo_horario_fim = time(
@@ -142,3 +150,24 @@ class TestMedico(TestCase):
 
         with self.assertRaises(ValueError):
             medico.alterar_horario_atendimento(hora_fim = novo_horario_fim)
+
+    def test_alterar_dias_atendimento(self):
+
+        medico = Medico(
+            nome = "Dr House",
+            hora_inicio = time(
+                hour = 8,
+                minute = 0
+            ),
+            hora_fim = time(
+                hour = 12,
+                minute = 0
+            ),
+            lista_dias = [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA]
+        )
+
+        nova_lista_dias_atendimento = [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUINTA, DIAS.SEXTA]
+
+        medico.alterar_dias_atendimento(lista_dias = nova_lista_dias_atendimento)
+
+        self.assertEqual(nova_lista_dias_atendimento, medico.dias_atendimento)

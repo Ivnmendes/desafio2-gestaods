@@ -1,41 +1,31 @@
 
-from enum import Enum
-from datetime import time
+from datetime import date, datetime
 from typing import Optional, TypedDict
 from src.exceptions import HorarioIndisponivelException
 from src.paciente import Paciente
 from src.medico import Medico
-from src.utils import gerar_lista_horarios
-
-class DIA(Enum):
-    SEGUNDA = "segunda"
-    TERCA = "terca"
-    QUARTA = "quarta"
-    QUINTA = "quinta"
-    SEXTA = "sexta"
+from src.utils import gerar_lista_datetime
 
 DURACAO_CONSULTA = 30
 
 class Agendamento(TypedDict):
-    horario: time
+    horario: datetime
     paciente: Optional[Paciente]
 
 class Agenda():
 
-    def __init__(self, dia: DIA, medico: Medico):
+    def __init__(self, medico: 'Medico', data_inicio: date, data_fim: date):
 
-        self._dia = dia
         self._medico = medico
 
-        list_horarios = gerar_lista_horarios(
-            hora_inicio = medico.hora_inicio, 
-            hora_fim = medico.hora_fim, 
-            intervalo_minutos = DURACAO_CONSULTA
-        )
+        if data_inicio > data_fim:
+            raise ValueError("A data inicial deve ser menor que a data final!")
+
+        lista_datetimes = gerar_lista_datetime(medico, data_inicio, data_fim, DURACAO_CONSULTA)
 
         self._agendamentos = {
-            horario: Agendamento(horario=horario, paciente=None)
-            for horario in list_horarios
+            dt: Agendamento(data_hora=dt, paciente=None)
+            for dt in lista_datetimes
         }
 
     def __contains__(self, paciente: Paciente) -> bool:
@@ -60,27 +50,23 @@ class Agenda():
     def medico(self) -> Medico:
         return self._medico
     
-    @property
-    def dia(self) -> DIA:
-        return self._dia
-    
-    def agendar_horario(self, paciente: Paciente, horario: time) -> None:
+    def agendar_horario(self, paciente: 'Paciente', data_hora: datetime) -> None:
 
-        if not self.verificar_horario_disponivel(horario):
+        if not self.verificar_horario_disponivel(data_hora):
             raise HorarioIndisponivelException("Horário ocupado/inexistente, escolha outro!")
         
-        self._agendamentos[horario]['paciente'] = paciente
+        self._agendamentos[data_hora]['paciente'] = paciente
 
-    def desmarcar_horario(self, horario: time) -> None:
+    def desmarcar_horario(self, data_hora: datetime) -> None:
 
-        if not horario in self._agendamentos.keys():
+        if not data_hora in self._agendamentos.keys():
             raise HorarioIndisponivelException("Horário não coberto pelo médico!")
 
-        self._agendamentos[horario]['paciente'] = None
+        self._agendamentos[data_hora]['paciente'] = None
 
-    def verificar_horario_disponivel(self, horario: time) -> bool:
+    def verificar_horario_disponivel(self, data_hora: datetime) -> bool:
 
-        if not horario in self._agendamentos.keys():
+        if not data_hora in self._agendamentos.keys():
             return False
 
-        return self._agendamentos[horario]['paciente'] is None
+        return self._agendamentos[data_hora]['paciente'] is None
