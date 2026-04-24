@@ -1,8 +1,8 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from typing import Optional, TypedDict
 
 from src.core.exceptions import HorarioIndisponivelException
-from src.core.utils import gerar_lista_datetime
+from src.core.utils import MAPA_DIAS_SEMANA, gerar_lista_horarios
 from src.medico.medico import Medico
 from src.paciente.paciente import Paciente
 
@@ -23,7 +23,7 @@ class Agenda:
         if data_inicio > data_fim:
             raise ValueError("A data inicial deve ser menor que a data final!")
 
-        lista_datetimes = gerar_lista_datetime(
+        lista_datetimes = self._gerar_lista_datetime(
             medico, data_inicio, data_fim, DURACAO_CONSULTA
         )
 
@@ -75,3 +75,36 @@ class Agenda:
             return False
 
         return self._agendamentos[data_hora]["paciente"] is None
+
+    def _gerar_lista_datetime(
+        self,
+        medico: "Medico",
+        data_inicio: date,
+        data_fim: date,
+        intervalo_minutos: int,
+    ) -> list[datetime]:
+
+        dias = []
+
+        dias_trabalho_ints = [
+            MAPA_DIAS_SEMANA[dia_enum] for dia_enum in medico.dias_atendimento
+        ]
+
+        dia_atual = data_inicio
+        while dia_atual <= data_fim:
+
+            if dia_atual.weekday() in dias_trabalho_ints:
+
+                horarios_do_dia = gerar_lista_horarios(
+                    hora_inicio=medico.hora_inicio,
+                    hora_fim=medico.hora_fim,
+                    intervalo_minutos=intervalo_minutos,
+                )
+
+                for horario in horarios_do_dia:
+                    novo_slot = datetime.combine(dia_atual, horario)
+                    dias.append(novo_slot)
+
+            dia_atual += timedelta(days=1)
+
+        return dias

@@ -1,9 +1,9 @@
 from datetime import date, datetime, time
 from unittest import TestCase
 
-from src.agenda.agenda import DURACAO_CONSULTA, Agenda
+from src.agenda.agenda import Agenda
 from src.core.exceptions import HorarioIndisponivelException
-from src.core.utils import DIAS, gerar_lista_datetime
+from src.core.utils import DIAS
 from src.medico.medico import Medico
 from src.paciente.paciente import Paciente
 
@@ -31,15 +31,37 @@ class TestAgenda(TestCase):
         agenda = Agenda(
             self.medico_1,
             data_inicio=date(year=2026, month=4, day=1),
-            data_fim=date(year=2026, month=4, day=30),
+            data_fim=date(year=2026, month=4, day=2),
         )
 
-        lista_datetimes = gerar_lista_datetime(
-            medico=self.medico_1,
-            data_inicio=date(year=2026, month=4, day=1),
-            data_fim=date(year=2026, month=4, day=30),
-            intervalo_minutos=DURACAO_CONSULTA,
-        )
+        lista_datetimes = [
+            datetime(year=2026, month=4, day=1, hour=8, minute=30),
+            datetime(year=2026, month=4, day=1, hour=9, minute=0),
+            datetime(year=2026, month=4, day=1, hour=9, minute=30),
+            datetime(year=2026, month=4, day=1, hour=10, minute=0),
+            datetime(year=2026, month=4, day=1, hour=10, minute=30),
+            datetime(year=2026, month=4, day=1, hour=11, minute=0),
+            datetime(year=2026, month=4, day=1, hour=11, minute=30),
+            datetime(year=2026, month=4, day=1, hour=12, minute=0),
+            datetime(year=2026, month=4, day=1, hour=12, minute=30),
+            datetime(year=2026, month=4, day=1, hour=13, minute=0),
+            datetime(year=2026, month=4, day=1, hour=13, minute=30),
+            datetime(year=2026, month=4, day=1, hour=14, minute=0),
+            datetime(year=2026, month=4, day=1, hour=14, minute=30),
+            datetime(year=2026, month=4, day=2, hour=8, minute=30),
+            datetime(year=2026, month=4, day=2, hour=9, minute=0),
+            datetime(year=2026, month=4, day=2, hour=9, minute=30),
+            datetime(year=2026, month=4, day=2, hour=10, minute=0),
+            datetime(year=2026, month=4, day=2, hour=10, minute=30),
+            datetime(year=2026, month=4, day=2, hour=11, minute=0),
+            datetime(year=2026, month=4, day=2, hour=11, minute=30),
+            datetime(year=2026, month=4, day=2, hour=12, minute=0),
+            datetime(year=2026, month=4, day=2, hour=12, minute=30),
+            datetime(year=2026, month=4, day=2, hour=13, minute=0),
+            datetime(year=2026, month=4, day=2, hour=13, minute=30),
+            datetime(year=2026, month=4, day=2, hour=14, minute=0),
+            datetime(year=2026, month=4, day=2, hour=14, minute=30),
+        ]
 
         self.assertEqual(lista_datetimes, list(agenda.agendamentos.keys()))
 

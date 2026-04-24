@@ -1,8 +1,5 @@
-from __future__ import annotations
-
 from datetime import date, datetime, time, timedelta
 from enum import Enum
-from typing import TYPE_CHECKING
 
 
 class DIAS(Enum):
@@ -48,40 +45,3 @@ def gerar_lista_horarios(
         atual_dt += passo
 
     return horarios
-
-
-if TYPE_CHECKING:
-    from src.medico.medico import Medico
-
-
-def gerar_lista_datetime(
-    medico: Medico,
-    data_inicio: date,
-    data_fim: date,
-    intervalo_minutos: int,
-) -> list[datetime]:
-
-    dias = []
-
-    dias_trabalho_ints = [
-        MAPA_DIAS_SEMANA[dia_enum] for dia_enum in medico.dias_atendimento
-    ]
-
-    dia_atual = data_inicio
-    while dia_atual <= data_fim:
-
-        if dia_atual.weekday() in dias_trabalho_ints:
-
-            horarios_do_dia = gerar_lista_horarios(
-                hora_inicio=medico.hora_inicio,
-                hora_fim=medico.hora_fim,
-                intervalo_minutos=intervalo_minutos,
-            )
-
-            for horario in horarios_do_dia:
-                novo_slot = datetime.combine(dia_atual, horario)
-                dias.append(novo_slot)
-
-        dia_atual += timedelta(days=1)
-
-    return dias
