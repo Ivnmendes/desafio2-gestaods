@@ -1,11 +1,11 @@
 
 from unittest import TestCase
 from datetime import date, datetime, time
-from src.agenda import Agenda, DURACAO_CONSULTA
-from src.exceptions import HorarioIndisponivelException
-from src.medico import Medico
-from src.paciente import Paciente
-from src.utils import gerar_lista_datetime, gerar_lista_horarios, DIAS
+from src.agenda.agenda import Agenda, DURACAO_CONSULTA
+from src.core.exceptions import HorarioIndisponivelException
+from src.medico.medico import Medico
+from src.paciente.paciente import Paciente
+from src.core.utils import gerar_lista_datetime, gerar_lista_horarios, DIAS
 
 class TestAgenda(TestCase):
 

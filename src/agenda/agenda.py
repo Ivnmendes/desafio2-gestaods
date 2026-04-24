@@ -1,10 +1,10 @@
 
 from datetime import date, datetime
 from typing import Optional, TypedDict
-from src.exceptions import HorarioIndisponivelException
-from src.paciente import Paciente
-from src.medico import Medico
-from src.utils import gerar_lista_datetime
+from src.core.exceptions import HorarioIndisponivelException
+from src.paciente.paciente import Paciente
+from src.medico.medico import Medico
+from src.core.utils import gerar_lista_datetime
 
 DURACAO_CONSULTA = 30
 

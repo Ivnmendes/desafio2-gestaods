@@ -1,6 +1,6 @@
 
 from unittest import TestCase
-from src.paciente import Paciente
+from src.paciente.paciente import Paciente
 
 class TestPaciente(TestCase):
 
