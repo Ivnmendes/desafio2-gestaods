@@ -1,7 +1,6 @@
-
 from datetime import time
-from src.core.utils import DIAS, validar_horario
 
+from src.core.utils import DIAS, validar_horario
 
 
 class IntervaloHorario:
@@ -10,7 +9,7 @@ class IntervaloHorario:
 
         if not validar_horario(hora_inicio=hora_inicio, hora_fim=hora_fim):
             raise ValueError("O médico deve ter um horário de atendimento válido!")
-        
+
         self._hora_inicio = hora_inicio
         self._hora_fim = hora_fim
 
@@ -21,7 +20,7 @@ class IntervaloHorario:
     @property
     def hora_fim(self):
         return self._hora_fim
-    
+
 
 class DiasAtendimento:
 
@@ -29,7 +28,7 @@ class DiasAtendimento:
 
         if any(dia not in DIAS for dia in lista_dias):
             raise ValueError("Os dias de atendimento devem ser válidos!")
-        
+
         self._lista_dias = lista_dias
 
     @property

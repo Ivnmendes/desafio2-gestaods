@@ -1,3 +1,2 @@
-
 class HorarioIndisponivelException(Exception):
     pass
