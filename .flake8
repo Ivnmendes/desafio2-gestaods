@@ -1,0 +1,6 @@
+[flake8]
+max-line-length = 88
+extend-ignore = E203, D100, D101, D102, D103, D104, D105, D107
+exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,migrations
+per-file-ignores =
+    src/__init__.py: F401, F403
