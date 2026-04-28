@@ -10,6 +10,7 @@ class TestPaciente(TestCase):
         paciente = Paciente(nome="Foreman")
 
         self.assertIsInstance(paciente, Paciente)
+        self.assertEqual("Foreman", paciente.nome)
 
     def test_nao_criar_paciente_sem_nome(self):
 

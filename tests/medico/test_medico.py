@@ -17,6 +17,12 @@ class TestMedico(TestCase):
         )
 
         self.assertIsInstance(medico, Medico)
+        self.assertEqual("Dr House", medico.nome)
+        self.assertEqual(time(hour=8, minute=0), medico.hora_inicio)
+        self.assertEqual(time(hour=12, minute=0), medico.hora_fim)
+        self.assertEqual(
+            [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA], medico.dias_atendimento
+        )
 
     def test_nao_criar_medico_hora_invalida(self):
 

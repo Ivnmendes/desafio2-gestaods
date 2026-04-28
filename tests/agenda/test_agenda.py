@@ -64,6 +64,16 @@ class TestAgenda(TestCase):
         ]
 
         self.assertEqual(lista_datetimes, list(agenda.agendamentos.keys()))
+        self.assertEqual(self.medico_1, agenda.medico)
+
+    def test_nao_criar_agenda_com_datas_invalidas(self):
+
+        with self.assertRaises(ValueError):
+            Agenda(
+                self.medico_1,
+                data_inicio=date(year=2026, month=4, day=1),
+                data_fim=date(year=2026, month=3, day=30),
+            )
 
     def test_agendar_horario(self):
 
@@ -164,3 +174,35 @@ class TestAgenda(TestCase):
             agenda.desmarcar_horario(
                 datetime(year=2026, month=4, day=2, hour=15, minute=30)
             )
+
+    def test_verificar_se_paciente_tem_agendamento(self):
+
+        agenda = Agenda(
+            self.medico_1,
+            data_inicio=date(year=2026, month=4, day=1),
+            data_fim=date(year=2026, month=4, day=30),
+        )
+
+        agenda.agendar_horario(
+            self.paciente_1, datetime(year=2026, month=4, day=2, hour=9, minute=30)
+        )
+
+        self.assertTrue(self.paciente_1 in agenda)
+        self.assertFalse(self.paciente_2 in agenda)
+
+    def test_contar_agendamentos(self):
+
+        agenda = Agenda(
+            self.medico_1,
+            data_inicio=date(year=2026, month=4, day=1),
+            data_fim=date(year=2026, month=4, day=30),
+        )
+
+        agenda.agendar_horario(
+            self.paciente_1, datetime(year=2026, month=4, day=2, hour=9, minute=30)
+        )
+        agenda.agendar_horario(
+            self.paciente_2, datetime(year=2026, month=4, day=2, hour=10, minute=30)
+        )
+
+        self.assertEqual(2, len(agenda))
