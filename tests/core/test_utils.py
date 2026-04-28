@@ -1,5 +1,4 @@
 from datetime import time
-from typing import List
 from unittest import TestCase
 
 from src.core.utils import gerar_lista_horarios, validar_horario
