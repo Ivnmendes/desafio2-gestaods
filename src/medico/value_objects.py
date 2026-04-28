@@ -26,7 +26,8 @@ class DiasAtendimento:
 
     def __init__(self, lista_dias: list[DIAS]):
 
-        if any(dia not in DIAS for dia in lista_dias):
+        valores_validos = {d.value for d in DIAS}
+        if any((dia.value if isinstance(dia, DIAS) else dia) not in valores_validos for dia in lista_dias):
             raise ValueError("Os dias de atendimento devem ser válidos!")
 
         self._lista_dias = lista_dias
