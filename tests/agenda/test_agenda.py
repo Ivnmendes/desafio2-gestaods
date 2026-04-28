@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from src.agenda.agenda import Agenda
 from src.core.exceptions import HorarioIndisponivelException
-from src.core.utils import DIAS
+from src.core.utils import Dias
 from src.medico.medico import Medico
 from src.paciente.paciente import Paciente
 
@@ -14,13 +14,13 @@ class TestAgenda(TestCase):
         nome="Dr House",
         hora_inicio=time(hour=8, minute=30),
         hora_fim=time(hour=14, minute=30),
-        lista_dias=[DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA],
+        lista_dias=[Dias.SEGUNDA, Dias.TERCA, Dias.QUARTA, Dias.QUINTA, Dias.SEXTA],
     )
     medico_2 = Medico(
         nome="Treze",
         hora_inicio=time(hour=10, minute=30),
         hora_fim=time(hour=16, minute=30),
-        lista_dias=[DIAS.SEGUNDA, DIAS.TERCA, DIAS.SEXTA],
+        lista_dias=[Dias.SEGUNDA, Dias.TERCA, Dias.SEXTA],
     )
 
     paciente_1 = Paciente(nome="Foreman")

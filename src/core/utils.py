@@ -2,7 +2,7 @@ from datetime import date, datetime, time, timedelta
 from enum import Enum
 
 
-class DIAS(Enum):
+class Dias(Enum):
     SEGUNDA = "segunda"
     TERCA = "terca"
     QUARTA = "quarta"
@@ -13,13 +13,13 @@ class DIAS(Enum):
 
 
 MAPA_DIAS_SEMANA = {
-    DIAS.SEGUNDA: 0,
-    DIAS.TERCA: 1,
-    DIAS.QUARTA: 2,
-    DIAS.QUINTA: 3,
-    DIAS.SEXTA: 4,
-    DIAS.SABADO: 5,
-    DIAS.DOMINGO: 6,
+    Dias.SEGUNDA: 0,
+    Dias.TERCA: 1,
+    Dias.QUARTA: 2,
+    Dias.QUINTA: 3,
+    Dias.SEXTA: 4,
+    Dias.SABADO: 5,
+    Dias.DOMINGO: 6,
 }
 
 

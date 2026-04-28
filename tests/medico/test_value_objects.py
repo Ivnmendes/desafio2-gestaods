@@ -1,11 +1,10 @@
 
-from unittest import TestCase
-from src.medico.value_objects import (
-    IntervaloHorario,
-    DiasAtendimento
-)
 from datetime import time
-from src.core.utils import DIAS
+from unittest import TestCase
+
+from src.core.utils import Dias
+from src.medico.value_objects import DiasAtendimento, IntervaloHorario
+
 
 class TestIntervaloHorario(TestCase):
 
@@ -21,9 +20,9 @@ class TestIntervaloHorario(TestCase):
 class TestDiasAtendimento(TestCase):
 
     def test_dias_atendimento_validos(self):
-        dias = DiasAtendimento(lista_dias=[DIAS.SEGUNDA, DIAS.QUARTA, DIAS.SEXTA])
-        self.assertEqual(dias.valor, [DIAS.SEGUNDA, DIAS.QUARTA, DIAS.SEXTA])
+        dias = DiasAtendimento(lista_dias=[Dias.SEGUNDA, Dias.QUARTA, Dias.SEXTA])
+        self.assertEqual(dias.valor, [Dias.SEGUNDA, Dias.QUARTA, Dias.SEXTA])
 
     def test_dias_atendimento_invalidos(self):
         with self.assertRaises(ValueError):
-            DiasAtendimento(lista_dias=[DIAS.SEGUNDA, "TERÇA", DIAS.QUARTA])    
+            DiasAtendimento(lista_dias=[Dias.SEGUNDA, "TERÇA", Dias.QUARTA])    

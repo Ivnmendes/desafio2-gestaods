@@ -1,7 +1,7 @@
 from datetime import time
 from unittest import TestCase
 
-from src.core.utils import DIAS
+from src.core.utils import Dias
 from src.medico.medico import Medico
 
 
@@ -13,7 +13,7 @@ class TestMedico(TestCase):
             nome="Dr House",
             hora_inicio=time(hour=8, minute=0),
             hora_fim=time(hour=12, minute=0),
-            lista_dias=[DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA],
+            lista_dias=[Dias.SEGUNDA, Dias.TERCA, Dias.QUARTA, Dias.QUINTA, Dias.SEXTA],
         )
 
         self.assertIsInstance(medico, Medico)
@@ -21,7 +21,7 @@ class TestMedico(TestCase):
         self.assertEqual(time(hour=8, minute=0), medico.hora_inicio)
         self.assertEqual(time(hour=12, minute=0), medico.hora_fim)
         self.assertEqual(
-            [DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA], medico.dias_atendimento
+            [Dias.SEGUNDA, Dias.TERCA, Dias.QUARTA, Dias.QUINTA, Dias.SEXTA], medico.dias_atendimento
         )
 
     def test_nao_criar_medico_hora_invalida(self):
@@ -32,11 +32,11 @@ class TestMedico(TestCase):
                 hora_inicio=time(hour=-8, minute=0),
                 hora_fim=time(hour=12, minute=0),
                 lista_dias=[
-                    DIAS.SEGUNDA,
-                    DIAS.TERCA,
-                    DIAS.QUARTA,
-                    DIAS.QUINTA,
-                    DIAS.SEXTA,
+                    Dias.SEGUNDA,
+                    Dias.TERCA,
+                    Dias.QUARTA,
+                    Dias.QUINTA,
+                    Dias.SEXTA,
                 ],
             )
 
@@ -48,11 +48,11 @@ class TestMedico(TestCase):
                 hora_inicio=time(hour=8, minute=0),
                 hora_fim=time(hour=12, minute=0),
                 lista_dias=[
-                    DIAS.SEGUNDA,
-                    DIAS.TERCA,
-                    DIAS.QUARTA,
-                    DIAS.QUINTA,
-                    DIAS.SEXTA,
+                    Dias.SEGUNDA,
+                    Dias.TERCA,
+                    Dias.QUARTA,
+                    Dias.QUINTA,
+                    Dias.SEXTA,
                 ],
             )
 
@@ -64,11 +64,11 @@ class TestMedico(TestCase):
                 hora_inicio=time(hour=12, minute=0),
                 hora_fim=time(hour=8, minute=0),
                 lista_dias=[
-                    DIAS.SEGUNDA,
-                    DIAS.TERCA,
-                    DIAS.QUARTA,
-                    DIAS.QUINTA,
-                    DIAS.SEXTA,
+                    Dias.SEGUNDA,
+                    Dias.TERCA,
+                    Dias.QUARTA,
+                    Dias.QUINTA,
+                    Dias.SEXTA,
                 ],
             )
 
@@ -78,7 +78,7 @@ class TestMedico(TestCase):
             nome="Dr House",
             hora_inicio=time(hour=8, minute=0),
             hora_fim=time(hour=12, minute=0),
-            lista_dias=[DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA],
+            lista_dias=[Dias.SEGUNDA, Dias.TERCA, Dias.QUARTA, Dias.QUINTA, Dias.SEXTA],
         )
 
         novo_horario_inicio = time(hour=9, minute=30)
@@ -95,7 +95,7 @@ class TestMedico(TestCase):
             nome="Dr House",
             hora_inicio=time(hour=8, minute=0),
             hora_fim=time(hour=12, minute=0),
-            lista_dias=[DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA],
+            lista_dias=[Dias.SEGUNDA, Dias.TERCA, Dias.QUARTA, Dias.QUINTA, Dias.SEXTA],
         )
 
         novo_horario_fim = time(hour=13, minute=30)
@@ -111,7 +111,7 @@ class TestMedico(TestCase):
             nome="Dr House",
             hora_inicio=time(hour=8, minute=0),
             hora_fim=time(hour=12, minute=0),
-            lista_dias=[DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA],
+            lista_dias=[Dias.SEGUNDA, Dias.TERCA, Dias.QUARTA, Dias.QUINTA, Dias.SEXTA],
         )
 
         novo_horario_fim = time(hour=7, minute=30)
@@ -125,14 +125,14 @@ class TestMedico(TestCase):
             nome="Dr House",
             hora_inicio=time(hour=8, minute=0),
             hora_fim=time(hour=12, minute=0),
-            lista_dias=[DIAS.SEGUNDA, DIAS.TERCA, DIAS.QUARTA, DIAS.QUINTA, DIAS.SEXTA],
+            lista_dias=[Dias.SEGUNDA, Dias.TERCA, Dias.QUARTA, Dias.QUINTA, Dias.SEXTA],
         )
 
         nova_lista_dias_atendimento = [
-            DIAS.SEGUNDA,
-            DIAS.TERCA,
-            DIAS.QUINTA,
-            DIAS.SEXTA,
+            Dias.SEGUNDA,
+            Dias.TERCA,
+            Dias.QUINTA,
+            Dias.SEXTA,
         ]
 
         medico.alterar_dias_atendimento(lista_dias=nova_lista_dias_atendimento)

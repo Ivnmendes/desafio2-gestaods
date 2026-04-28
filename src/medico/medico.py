@@ -1,6 +1,6 @@
 from datetime import time
 
-from src.core.utils import DIAS
+from src.core.utils import Dias
 from src.core.value_objects import Nome
 from src.medico.value_objects import DiasAtendimento, IntervaloHorario
 
@@ -8,7 +8,7 @@ from src.medico.value_objects import DiasAtendimento, IntervaloHorario
 class Medico:
 
     def __init__(
-        self, nome: str, hora_inicio: time, hora_fim: time, lista_dias: list[DIAS]
+        self, nome: str, hora_inicio: time, hora_fim: time, lista_dias: list[Dias]
     ) -> None:
 
         self._nome = Nome(nome=nome)
@@ -44,6 +44,6 @@ class Medico:
             hora_inicio=hora_inicio_alterar, hora_fim=hora_fim_alterar
         )
 
-    def alterar_dias_atendimento(self, lista_dias: list[DIAS]) -> None:
+    def alterar_dias_atendimento(self, lista_dias: list[Dias]) -> None:
 
         self._dias_atendimento = DiasAtendimento(lista_dias=lista_dias)

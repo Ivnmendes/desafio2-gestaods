@@ -1,6 +1,6 @@
 from datetime import time
 
-from src.core.utils import DIAS, validar_horario
+from src.core.utils import Dias, validar_horario
 
 
 class IntervaloHorario:
@@ -24,10 +24,10 @@ class IntervaloHorario:
 
 class DiasAtendimento:
 
-    def __init__(self, lista_dias: list[DIAS]):
+    def __init__(self, lista_dias: list[Dias]):
 
-        valores_validos = {d.value for d in DIAS}
-        if any((dia.value if isinstance(dia, DIAS) else dia) not in valores_validos for dia in lista_dias):
+        valores_validos = {d.value for d in Dias}
+        if any((dia.value if isinstance(dia, Dias) else dia) not in valores_validos for dia in lista_dias):
             raise ValueError("Os dias de atendimento devem ser válidos!")
 
         self._lista_dias = lista_dias
