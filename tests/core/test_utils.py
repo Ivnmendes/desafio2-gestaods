@@ -49,6 +49,6 @@ class TestUtils(TestCase):
             intervalo_minutos=30,
         )
 
-        lista_esperada = List[time]()
+        lista_esperada = list[time]()
 
         self.assertEqual(lista_esperada, lista_horarios)
