@@ -19,7 +19,7 @@ class Medico:
 
     @property
     def nome(self):
-        return self.nome.valor
+        return self._nome.valor
 
     @property
     def hora_inicio(self):
