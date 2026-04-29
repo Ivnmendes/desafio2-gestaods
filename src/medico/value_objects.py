@@ -26,6 +26,9 @@ class DiasAtendimento:
 
     def __init__(self, lista_dias: list[Dias]):
 
+        if len(lista_dias) == 0:
+            raise ValueError("O médico deve ter pelo menos um dia de atendimento!")
+        
         valores_validos = {d.value for d in Dias}
         if any((dia.value if isinstance(dia, Dias) else dia) not in valores_validos for dia in lista_dias):
             raise ValueError("Os dias de atendimento devem ser válidos!")

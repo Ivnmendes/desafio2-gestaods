@@ -72,6 +72,24 @@ class TestMedico(TestCase):
                 ],
             )
 
+    def test_nao_criar_medico_lista_dias_vazia(self):
+        with self.assertRaises(ValueError):
+            Medico(
+                nome="Dr House",
+                hora_inicio=time(hour=8, minute=0),
+                hora_fim=time(hour=12, minute=0),
+                lista_dias=[],
+            )
+
+    def test_nao_criar_medico_lista_dias_invalida(self):
+        with self.assertRaises(ValueError):
+            Medico(
+                nome="Dr House",
+                hora_inicio=time(hour=8, minute=0),
+                hora_fim=time(hour=12, minute=0),
+                lista_dias=[Dias.SEGUNDA, "TERÇA", Dias.QUARTA],
+            )
+
     def test_alterar_horario_atendimento(self):
 
         medico = Medico(
