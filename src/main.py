@@ -1,7 +1,6 @@
-
+import os
 from datetime import date, datetime, time
 from itertools import groupby
-import os
 
 from agenda.agenda import Agenda
 from core.exceptions import HorarioIndisponivelException
@@ -11,7 +10,8 @@ from paciente.paciente import Paciente
 
 
 def limpar_tela():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system("cls" if os.name == "nt" else "clear")
+
 
 def ui_menu_inicial() -> str:
     return """
@@ -23,6 +23,7 @@ def ui_menu_inicial() -> str:
     0 - Sair
     """
 
+
 def ui_listar_agendas(agendas: list[Agenda]) -> str:
 
     if len(agendas) == 0:
@@ -30,9 +31,13 @@ def ui_listar_agendas(agendas: list[Agenda]) -> str:
 
     resultado = ""
     for i, agenda in enumerate(agendas):
-        resultado += f"{i + 1} - Médico: {agenda.medico.nome}, Total de Agendamentos: {len(agenda)}\n"
+        resultado += (
+            f"{i + 1} - Médico: {agenda.medico.nome}, "
+            f"Total de Agendamentos: {len(agenda)}\n"
+        )
 
     return resultado
+
 
 def ui_listar_agendamentos(agenda: Agenda) -> str:
 
@@ -42,27 +47,37 @@ def ui_listar_agendamentos(agenda: Agenda) -> str:
     resultado = ""
 
     for data, grupo in groupby(agenda.agendamentos.items(), key=lambda x: x[0].date()):
-        
+
         dia_semana = MAPA_DIAS_SEMANA[data.weekday()]
-        
+
         resultado += f"\n--- {data.strftime('%d/%m/%Y')} ({dia_semana}) ---\n"
-        
+
         for data_hora, agendamento in grupo:
-            paciente_nome = agendamento["paciente"].nome if agendamento["paciente"] else "Disponível"
+            paciente_nome = (
+                agendamento["paciente"].nome
+                if agendamento["paciente"]
+                else "Disponível"
+            )
             resultado += f"  {data_hora.strftime('%H:%M')} - {paciente_nome}\n"
 
     return resultado
+
 
 def ui_listar_todos_agendamentos(lista_agendas: list[Agenda]) -> str:
 
     resultado = ""
     for i, agenda in enumerate(lista_agendas):
         resultado += "-" * 30 + "\n"
-        resultado += f"Agenda {i + 1}: Médico: {agenda.medico.nome}, Total de Agendamentos: {len(agenda)}\n"
+        resultado += (
+            f"Agenda {i + 1}:"
+            f" Médico: {agenda.medico.nome}, "
+            f"Total de Agendamentos: {len(agenda)}\n"
+        )
         resultado += ui_listar_agendamentos(agenda)
         resultado += "-" * 30 + "\n"
 
     return resultado
+
 
 def ui_listar_consultas(agenda: Agenda) -> str:
 
@@ -73,9 +88,13 @@ def ui_listar_consultas(agenda: Agenda) -> str:
 
     for data_hora, agendamento in agenda.agendamentos.items():
         if agendamento["paciente"] is not None:
-            resultado += f"{data_hora.strftime('%d/%m/%Y %H:%M')} - Paciente: {agendamento['paciente'].nome}\n"
+            resultado += (
+                f"{data_hora.strftime('%d/%m/%Y %H:%M')} - "
+                f"Paciente: {agendamento['paciente'].nome}\n"
+            )
 
     return resultado if resultado else "Nenhuma consulta agendada."
+
 
 def ui_listar_medicos(medicos: list[Medico]) -> str:
 
@@ -85,20 +104,22 @@ def ui_listar_medicos(medicos: list[Medico]) -> str:
 
     return resultado
 
+
 def ui_listar_pacientes(pacientes: list[Paciente]) -> str:
-    
+
     resultado = "Pacientes Disponíveis:\n"
     for i, paciente in enumerate(pacientes):
         resultado += f"{i + 1} - {paciente.nome}\n"
 
     return resultado
 
+
 def selecionar_agenda(agendas: list[Agenda]) -> Agenda | None:
-    
+
     if len(agendas) == 0:
         print("Nenhuma agenda disponível.")
         return None
-    
+
     print("Selecione uma agenda:")
     print(ui_listar_agendas(agendas))
     opcao = input("Escolha uma opção: ")
@@ -112,13 +133,14 @@ def selecionar_agenda(agendas: list[Agenda]) -> Agenda | None:
     except ValueError:
         print("Opção inválida. Tente novamente.")
         return None
-    
+
+
 def selecionar_paciente(pacientes: list[Paciente]) -> Paciente | None:
 
     if len(pacientes) == 0:
         print("Nenhum paciente disponível.")
         return None
-    
+
     print("Selecione um paciente:")
     print(ui_listar_pacientes(pacientes))
     opcao = input("Escolha uma opção: ")
@@ -132,13 +154,14 @@ def selecionar_paciente(pacientes: list[Paciente]) -> Paciente | None:
     except ValueError:
         print("Opção inválida. Tente novamente.")
         return None
-    
+
+
 def selecionar_medico(medicos: list[Medico]) -> Medico | None:
 
     if len(medicos) == 0:
         print("Nenhum médico disponível.")
         return None
-    
+
     print("Selecione um médico:")
     print(ui_listar_medicos(medicos))
     opcao = input("Escolha uma opção: ")
@@ -153,6 +176,7 @@ def selecionar_medico(medicos: list[Medico]) -> Medico | None:
         print("Opção inválida. Tente novamente.")
         return None
 
+
 def opcao_criar_agenda(lista_medicos: list[Medico]) -> Agenda | None:
 
     medico = selecionar_medico(lista_medicos)
@@ -165,10 +189,14 @@ def opcao_criar_agenda(lista_medicos: list[Medico]) -> Agenda | None:
         data_final = input().split("/")
         dia_f, mes_f, ano_f = data_final
 
-        agenda = Agenda(medico, date(int(ano_i), int(mes_i), int(dia_i)), date(int(ano_f), int(mes_f), int(dia_f)))
+        agenda = Agenda(
+            medico,
+            date(int(ano_i), int(mes_i), int(dia_i)),
+            date(int(ano_f), int(mes_f), int(dia_f)),
+        )
 
         return agenda
-    
+
     except ValueError:
 
         print("Data inválida. Tente novamente.")
@@ -179,7 +207,10 @@ def opcao_criar_agenda(lista_medicos: list[Medico]) -> Agenda | None:
         print(f"Erro ao criar agenda: {e}")
         return None
 
-def opcao_agendar_consulta(lista_agendas: list[Agenda], lista_pacientes: list[Paciente]) -> None:
+
+def opcao_agendar_consulta(
+    lista_agendas: list[Agenda], lista_pacientes: list[Paciente]
+) -> None:
 
     agenda = selecionar_agenda(lista_agendas)
     paciente = selecionar_paciente(lista_pacientes)
@@ -208,6 +239,7 @@ def opcao_agendar_consulta(lista_agendas: list[Agenda], lista_pacientes: list[Pa
     except Exception as e:
         print(f"Erro ao agendar consulta: {e}")
 
+
 def opcao_desmarcar_consulta(lista_agendas: list[Agenda]) -> None:
 
     agenda = selecionar_agenda(lista_agendas)
@@ -218,7 +250,7 @@ def opcao_desmarcar_consulta(lista_agendas: list[Agenda]) -> None:
     if len(agenda) == 0:
         print("Nenhuma consulta agendada para desmarcar.")
         return
-    
+
     print(ui_listar_consultas(agenda))
 
     try:
@@ -240,10 +272,14 @@ def opcao_desmarcar_consulta(lista_agendas: list[Agenda]) -> None:
     except Exception as e:
         print(f"Erro ao desmarcar consulta: {e}")
 
+
 def main():
 
     medico = Medico(
-        nome="Dr. House", hora_inicio=time(9, 0), hora_fim=time(17, 0), lista_dias=[Dias.SEGUNDA, Dias.TERCA, Dias.QUARTA, Dias.QUINTA, Dias.SEXTA]
+        nome="Dr. House",
+        hora_inicio=time(9, 0),
+        hora_fim=time(17, 0),
+        lista_dias=[Dias.SEGUNDA, Dias.TERCA, Dias.QUARTA, Dias.QUINTA, Dias.SEXTA],
     )
     paciente_1 = Paciente(nome="Foremann")
     paciente_2 = Paciente(nome="Chase")
@@ -294,14 +330,15 @@ def main():
 
             if agenda is not None:
                 print(ui_listar_consultas(agenda))
-                
+
         elif opcao == "0":
             flag_rodar = False
         else:
             print("Opção inválida. Tente novamente.")
-        
+
         print("Pressione Enter para continuar...")
         input()
+
 
 if __name__ == "__main__":
     main()

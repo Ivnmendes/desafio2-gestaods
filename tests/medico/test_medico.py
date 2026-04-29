@@ -21,7 +21,8 @@ class TestMedico(TestCase):
         self.assertEqual(time(hour=8, minute=0), medico.hora_inicio)
         self.assertEqual(time(hour=12, minute=0), medico.hora_fim)
         self.assertEqual(
-            [Dias.SEGUNDA, Dias.TERCA, Dias.QUARTA, Dias.QUINTA, Dias.SEXTA], medico.dias_atendimento
+            [Dias.SEGUNDA, Dias.TERCA, Dias.QUARTA, Dias.QUINTA, Dias.SEXTA],
+            medico.dias_atendimento,
         )
 
     def test_nao_criar_medico_hora_invalida(self):

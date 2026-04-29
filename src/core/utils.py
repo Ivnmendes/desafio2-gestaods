@@ -24,6 +24,7 @@ MAPA_DIAS_WEEKDAY = {
 
 MAPA_DIAS_SEMANA = {v: k.value for k, v in MAPA_DIAS_WEEKDAY.items()}
 
+
 def validar_horario(hora_inicio: time, hora_fim: time) -> bool:
 
     return hora_inicio is not None and hora_fim is not None and hora_inicio < hora_fim
