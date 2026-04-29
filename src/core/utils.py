@@ -3,16 +3,16 @@ from enum import Enum
 
 
 class Dias(Enum):
-    SEGUNDA = "segunda"
-    TERCA = "terca"
-    QUARTA = "quarta"
-    QUINTA = "quinta"
-    SEXTA = "sexta"
-    SABADO = "sabado"
-    DOMINGO = "domingo"
+    SEGUNDA = "Segunda"
+    TERCA = "Terça"
+    QUARTA = "Quarta"
+    QUINTA = "Quinta"
+    SEXTA = "Sexta"
+    SABADO = "Sábado"
+    DOMINGO = "Domingo"
 
 
-MAPA_DIAS_SEMANA = {
+MAPA_DIAS_WEEKDAY = {
     Dias.SEGUNDA: 0,
     Dias.TERCA: 1,
     Dias.QUARTA: 2,
@@ -22,6 +22,7 @@ MAPA_DIAS_SEMANA = {
     Dias.DOMINGO: 6,
 }
 
+MAPA_DIAS_SEMANA = {v: k.value for k, v in MAPA_DIAS_WEEKDAY.items()}
 
 def validar_horario(hora_inicio: time, hora_fim: time) -> bool:
 

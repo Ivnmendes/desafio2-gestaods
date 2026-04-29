@@ -1,6 +1,6 @@
 from datetime import time
 
-from src.core.utils import Dias, validar_horario
+from core.utils import Dias, validar_horario
 
 
 class IntervaloHorario:

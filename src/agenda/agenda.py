@@ -1,10 +1,10 @@
 from datetime import date, datetime, timedelta
 from typing import Optional, TypedDict
 
-from src.core.exceptions import HorarioIndisponivelException
-from src.core.utils import MAPA_DIAS_SEMANA, gerar_lista_horarios
-from src.medico.medico import Medico
-from src.paciente.paciente import Paciente
+from core.exceptions import HorarioIndisponivelException
+from core.utils import MAPA_DIAS_WEEKDAY, gerar_lista_horarios
+from medico.medico import Medico
+from paciente.paciente import Paciente
 
 DURACAO_CONSULTA = 30
 
@@ -87,7 +87,7 @@ class Agenda:
         dias = []
 
         dias_trabalho_ints = [
-            MAPA_DIAS_SEMANA[dia_enum] for dia_enum in medico.dias_atendimento
+            MAPA_DIAS_WEEKDAY[dia_enum] for dia_enum in medico.dias_atendimento
         ]
 
         dia_atual = data_inicio

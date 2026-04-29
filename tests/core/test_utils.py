@@ -1,7 +1,7 @@
 from datetime import time
 from unittest import TestCase
 
-from src.core.utils import gerar_lista_horarios, validar_horario
+from core.utils import gerar_lista_horarios, validar_horario
 
 
 class TestUtils(TestCase):

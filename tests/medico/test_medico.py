@@ -1,8 +1,8 @@
 from datetime import time
 from unittest import TestCase
 
-from src.core.utils import Dias
-from src.medico.medico import Medico
+from core.utils import Dias
+from medico.medico import Medico
 
 
 class TestMedico(TestCase):

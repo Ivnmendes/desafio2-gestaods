@@ -1,11 +1,11 @@
 from datetime import date, datetime, time
 from unittest import TestCase
 
-from src.agenda.agenda import Agenda
-from src.core.exceptions import HorarioIndisponivelException
-from src.core.utils import Dias
-from src.medico.medico import Medico
-from src.paciente.paciente import Paciente
+from agenda.agenda import Agenda
+from core.exceptions import HorarioIndisponivelException
+from core.utils import Dias
+from medico.medico import Medico
+from paciente.paciente import Paciente
 
 
 class TestAgenda(TestCase):

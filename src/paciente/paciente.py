@@ -1,4 +1,5 @@
-from src.core.value_objects import Nome
+
+from core.value_objects import Nome
 
 
 class Paciente:

@@ -1,8 +1,8 @@
 from datetime import time
 
-from src.core.utils import Dias
-from src.core.value_objects import Nome
-from src.medico.value_objects import DiasAtendimento, IntervaloHorario
+from core.utils import Dias
+from core.value_objects import Nome
+from medico.value_objects import DiasAtendimento, IntervaloHorario
 
 
 class Medico:
