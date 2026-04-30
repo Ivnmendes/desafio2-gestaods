@@ -198,13 +198,7 @@ def opcao_criar_agenda(lista_medicos: list[Medico]) -> Agenda | None:
         return agenda
 
     except ValueError:
-
         print("Data inválida. Tente novamente.")
-        return None
-
-    except Exception as e:
-
-        print(f"Erro ao criar agenda: {e}")
         return None
 
 
@@ -216,7 +210,7 @@ def opcao_agendar_consulta(
     paciente = selecionar_paciente(lista_pacientes)
 
     if agenda is None or paciente is None:
-        return
+        return None
 
     print(ui_listar_agendamentos(agenda))
 
@@ -235,9 +229,6 @@ def opcao_agendar_consulta(
 
     except HorarioIndisponivelException as e:
         print(f"Horário indisponível: {e}")
-
-    except Exception as e:
-        print(f"Erro ao agendar consulta: {e}")
 
 
 def opcao_desmarcar_consulta(lista_agendas: list[Agenda]) -> None:
@@ -269,11 +260,8 @@ def opcao_desmarcar_consulta(lista_agendas: list[Agenda]) -> None:
     except HorarioIndisponivelException as e:
         print(f"Horário indisponível: {e}")
 
-    except Exception as e:
-        print(f"Erro ao desmarcar consulta: {e}")
 
-
-def main():
+def main(agenda=None):
 
     medico = Medico(
         nome="Dr. House",
@@ -286,7 +274,7 @@ def main():
 
     lista_medicos = [medico]
     lista_pacientes = [paciente_1, paciente_2]
-    lista_agendas = [Agenda(medico, date(2026, 4, 1), date(2026, 4, 5))]
+    lista_agendas = [agenda] if agenda is not None else []
 
     flag_rodar = True
 
